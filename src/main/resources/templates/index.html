@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>表格的增删改查</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="padding:2em 0;">
+            <p>点击 <i class="fa fa-pencil box"></i> 按钮可以对表格进行编辑，点击 <i class="fa fa-trash-o box"></i>按钮可以将该表格行删除。</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped" id="mytable">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>名字</th>
+                        <th>年龄</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12"  style="padding-bottom:2em;">
+            <button class="btn btn-info" id="add"><i class="fa fa-plus"></i> 添加新的表格行</button>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/js/bootstrap/bootstable.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            url: "User/queryAllUser",
+            data: "",
+            type: "POST",
+            dataType: "json",
+            success: function(data){
+
+                for (var i = 0; i < data.length; i++) {
+
+                    var trTemp = $("<tr id='" + data[i].id + "'></tr>");
+                    trTemp.append("<td>" + data[i].id + "</td>");
+                    trTemp.append("<td>"+ data[i].name +"</td>");
+                    trTemp.append("<td>"+ data[i].age +"</td>");
+                    trTemp.appendTo("#mytable");
+                }
+                $('#mytable').SetEditable({
+                    $addButton: $('#add')
+                });
+            },
+            error: function (err) {
+
+                alert("加载失败");
+            }
+        });
+    })
+</script>
+
+</body>
+</html>
