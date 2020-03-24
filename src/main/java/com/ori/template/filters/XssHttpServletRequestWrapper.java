@@ -86,7 +86,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return value;
+        return cleanXSSByHeader(value);
     }
 
     private String cleanXSSByHeader(String valueP) {
